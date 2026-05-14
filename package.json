@@ -24,11 +24,11 @@
     "homepage": "https://github.com/stevenvelozo/pict-section-login#readme",
     "devDependencies": {
         "browser-env": "^3.3.0",
-        "pict": "^1.0.350",
-        "pict-application": "^1.0.33",
-        "pict-docuserve": "^0.1.5",
+        "pict": "^1.0.368",
+        "pict-application": "^1.0.34",
+        "pict-docuserve": "^1.0.1",
         "puppeteer": "^24.38.0",
-        "quackage": "^1.1.0"
+        "quackage": "^1.2.3"
     },
     "mocha": {
         "diff": true,
@@ -49,6 +49,6 @@
         ]
     },
     "dependencies": {
-        "pict-view": "^1.0.67"
+        "pict-view": "^1.0.68"
     }
 }
