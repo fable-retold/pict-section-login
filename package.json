@@ -1,6 +1,6 @@
 {
     "name": "pict-section-login",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "Pict login section for authentication UIs — works with orator-authentication or any custom backend",
     "main": "source/Pict-Section-Login.js",
     "scripts": {
@@ -26,7 +26,7 @@
         "browser-env": "^3.3.0",
         "pict": "^1.0.368",
         "pict-application": "^1.0.34",
-        "pict-docuserve": "^1.0.1",
+        "pict-docuserve": "^1.3.0",
         "puppeteer": "^24.38.0",
         "quackage": "^1.2.3"
     },
