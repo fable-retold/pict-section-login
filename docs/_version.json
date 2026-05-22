@@ -1,7 +1,7 @@
 {
 	"Name": "pict-section-login",
-	"Version": "0.0.1",
+	"Version": "1.0.0",
 	"Description": "Pict login section for authentication UIs — works with orator-authentication or any custom backend",
-	"GeneratedAt": "2026-04-10T17:25:37.018Z",
-	"GitCommit": "e785649"
+	"GeneratedAt": "2026-05-22T05:45:33.826Z",
+	"GitCommit": "c31cd7e"
 }
