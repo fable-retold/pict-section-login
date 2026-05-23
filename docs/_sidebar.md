@@ -18,9 +18,9 @@
 
 - Retold Ecosystem
 
-  - [Pict](/pict/pict/)
-  - [Pict View](/pict/pict-view/)
-  - [Pict Router](/pict/pict-router/)
-  - [Pict Application](/pict/pict-application/)
-  - [Orator Authentication](/orator/orator-authentication/)
-  - [Fable](/fable/fable/)
+  - [Pict](https://stevenvelozo.github.io/pict/)
+  - [Pict View](https://stevenvelozo.github.io/pict-view/)
+  - [Pict Router](https://stevenvelozo.github.io/pict-router/)
+  - [Pict Application](https://stevenvelozo.github.io/pict-application/)
+  - [Orator Authentication](https://stevenvelozo.github.io/orator-authentication/)
+  - [Fable](https://stevenvelozo.github.io/fable/)

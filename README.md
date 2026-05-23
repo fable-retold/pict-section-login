@@ -1,5 +1,7 @@
 # Pict Section Login
 
+> **[&#9654; Read the Pict-Section-Login Documentation](https://stevenvelozo.github.io/pict-section-login/)** &mdash; interactive docs with the full API reference.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
