@@ -1,7 +1,7 @@
 {
-	"Generated": "2026-05-22T05:45:33.669Z",
+	"Generated": "2026-05-26T18:24:01.921Z",
 	"Mode": "module",
-	"GitHubOrg": "stevenvelozo",
+	"GitHubOrg": "fable-retold",
 	"DefaultBranch": "master",
 	"Module": {
 		"Name": "pict-section-login",
@@ -67,27 +67,27 @@
 				"Children": [
 					{
 						"Title": "Pict",
-						"Path": "pict/pict/README.md"
+						"Path": "https://fable-retold.github.io/pict/README.md"
 					},
 					{
 						"Title": "Pict View",
-						"Path": "pict/pict-view/README.md"
+						"Path": "https://fable-retold.github.io/pict-view/README.md"
 					},
 					{
 						"Title": "Pict Router",
-						"Path": "pict/pict-router/README.md"
+						"Path": "https://fable-retold.github.io/pict-router/README.md"
 					},
 					{
 						"Title": "Pict Application",
-						"Path": "pict/pict-application/README.md"
+						"Path": "https://fable-retold.github.io/pict-application/README.md"
 					},
 					{
 						"Title": "Orator Authentication",
-						"Path": "orator/orator-authentication/README.md"
+						"Path": "https://fable-retold.github.io/orator-authentication/README.md"
 					},
 					{
 						"Title": "Fable",
-						"Path": "fable/fable/README.md"
+						"Path": "https://fable-retold.github.io/fable/README.md"
 					}
 				]
 			}
