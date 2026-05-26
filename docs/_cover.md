@@ -16,4 +16,4 @@ Register it as a Pict view, point it at your auth endpoints, and you get a style
 [Quick Start](quickstart.md)
 [Embedding Guide](embedding-guide.md)
 [Router Integration](router-integration.md)
-[GitHub](https://github.com/stevenvelozo/pict-section-login)
+[GitHub](https://github.com/fable-retold/pict-section-login)

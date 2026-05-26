@@ -14,14 +14,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/stevenvelozo/pict-section-login.git"
+        "url": "git+https://github.com/fable-retold/pict-section-login.git"
     },
     "author": "steven velozo <steven@velozo.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/stevenvelozo/pict-section-login/issues"
+        "url": "https://github.com/fable-retold/pict-section-login/issues"
     },
-    "homepage": "https://github.com/stevenvelozo/pict-section-login#readme",
+    "homepage": "https://github.com/fable-retold/pict-section-login#readme",
     "devDependencies": {
         "browser-env": "^3.3.0",
         "pict": "^1.0.368",

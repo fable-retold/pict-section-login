@@ -1,12 +1,12 @@
 # Pict Section Login
 
-> **[&#9654; Read the Pict-Section-Login Documentation](https://stevenvelozo.github.io/pict-section-login/)** &mdash; interactive docs with the full API reference.
+> **[&#9654; Read the Pict-Section-Login Documentation](https://fable-retold.github.io/pict-section-login/)** &mdash; interactive docs with the full API reference.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-A drop-in login section for Pict applications. Renders a styled login form, calls out to [orator-authentication](https://github.com/stevenvelozo/orator-authentication) (or any custom backend) for sign-in / sign-out / session-check, stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
+A drop-in login section for Pict applications. Renders a styled login form, calls out to [orator-authentication](https://github.com/fable-retold/orator-authentication) (or any custom backend) for sign-in / sign-out / session-check, stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
 
 ## Features
 
@@ -17,7 +17,7 @@ A drop-in login section for Pict applications. Renders a styled login form, call
 - **OAuth Provider Support** -- Optional OAuth button row populated from `/OAuth/Providers` and redirected through `/OAuth/Begin`
 - **AppData Integration** -- Session data is written to a configurable Pict manifest address (default `AppData.Session`)
 - **Override Hooks** -- `onLoginSuccess`, `onLoginFailed`, `onLogout`, `onSessionChecked` for post-auth navigation and app state updates
-- **Router Friendly** -- Designed to cooperate with [pict-router](https://github.com/stevenvelozo/pict-router) for route-guarded navigation and post-login redirects
+- **Router Friendly** -- Designed to cooperate with [pict-router](https://github.com/fable-retold/pict-router) for route-guarded navigation and post-login redirects
 - **Styled Out of the Box** -- Embedded CSS design system renders a polished card with no extra styling required
 
 ## Installation
@@ -95,7 +95,7 @@ See [docs/api-reference.md](docs/api-reference.md) and [docs/code-snippets.md](d
 
 ## Router Integration
 
-`pict-section-login` pairs naturally with [pict-router](https://github.com/stevenvelozo/pict-router): register your routes with `SkipRouteResolveOnAdd: true`, call `checkSession()` before resolving, and implement a `PendingRoute` redirect in `onLoginSuccess`. See [docs/router-integration.md](docs/router-integration.md) for the full pattern, including route guards and post-login redirects.
+`pict-section-login` pairs naturally with [pict-router](https://github.com/fable-retold/pict-router): register your routes with `SkipRouteResolveOnAdd: true`, call `checkSession()` before resolving, and implement a `PendingRoute` redirect in `onLoginSuccess`. See [docs/router-integration.md](docs/router-integration.md) for the full pattern, including route guards and post-login redirects.
 
 ## Documentation
 
@@ -126,12 +126,12 @@ npm run coverage
 
 ## Related Packages
 
-- [pict](https://github.com/stevenvelozo/pict) -- MVC application framework
-- [pict-view](https://github.com/stevenvelozo/pict-view) -- View base class
-- [pict-router](https://github.com/stevenvelozo/pict-router) -- Hash-based router that pairs with this module
-- [pict-application](https://github.com/stevenvelozo/pict-application) -- Application host and lifecycle
-- [orator-authentication](https://github.com/stevenvelozo/orator-authentication) -- Default backend
-- [fable](https://github.com/stevenvelozo/fable) -- Core service ecosystem
+- [pict](https://github.com/fable-retold/pict) -- MVC application framework
+- [pict-view](https://github.com/fable-retold/pict-view) -- View base class
+- [pict-router](https://github.com/fable-retold/pict-router) -- Hash-based router that pairs with this module
+- [pict-application](https://github.com/fable-retold/pict-application) -- Application host and lifecycle
+- [orator-authentication](https://github.com/fable-retold/orator-authentication) -- Default backend
+- [fable](https://github.com/fable-retold/fable) -- Core service ecosystem
 
 ## License
 

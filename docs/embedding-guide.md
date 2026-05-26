@@ -2,7 +2,7 @@
 
 This guide walks through embedding `pict-section-login` into a real Pict application with a login screen and protected content. It covers three common layouts: standalone login page, login-before-shell, and login-as-modal.
 
-All examples assume a host Pict application that extends `pict-application`. If you are starting from scratch, see [pict-application](https://github.com/stevenvelozo/pict-application) first.
+All examples assume a host Pict application that extends `pict-application`. If you are starting from scratch, see [pict-application](https://github.com/fable-retold/pict-application) first.
 
 ## Layout A: Standalone Login Page
 

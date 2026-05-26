@@ -1,6 +1,6 @@
 # Router Integration
 
-This guide shows how to use `pict-section-login` together with [pict-router](https://github.com/stevenvelozo/pict-router) to build an application where:
+This guide shows how to use `pict-section-login` together with [pict-router](https://github.com/fable-retold/pict-router) to build an application where:
 
 - Routes are hash-based (`#/Dashboard`, `#/Books`, `#/Users/42/Edit`)
 - Unauthenticated users are shown the login form instead of the route's content

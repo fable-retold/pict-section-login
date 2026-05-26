@@ -2,7 +2,7 @@
 
 > A drop-in login section for Pict applications
 
-Pict Section Login is a `pict-view` subclass that renders a styled authentication form, talks to a REST backend (the default endpoints match [orator-authentication](https://github.com/stevenvelozo/orator-authentication), but everything is configurable), stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
+Pict Section Login is a `pict-view` subclass that renders a styled authentication form, talks to a REST backend (the default endpoints match [orator-authentication](https://github.com/fable-retold/orator-authentication), but everything is configurable), stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
 
 The view ships with:
 
@@ -24,7 +24,7 @@ Everything is replaceable via the `Templates` array in the configuration, and th
 - **OAuth Provider Support** -- `loadOAuthProviders()` fetches the provider list and renders buttons that redirect through `OAuthBeginEndpoint`
 - **AppData Integration** -- Session data is written to a configurable Pict manifest address (default `AppData.Session`) so any template solver or view can read it
 - **Override Hooks** -- `onLoginSuccess`, `onLoginFailed`, `onLogout`, `onSessionChecked` hooks let you chain navigation or app-level state changes
-- **Router Friendly** -- Designed to cooperate with [pict-router](https://github.com/stevenvelozo/pict-router) for route-guarded navigation and post-login redirects
+- **Router Friendly** -- Designed to cooperate with [pict-router](https://github.com/fable-retold/pict-router) for route-guarded navigation and post-login redirects
 - **Styled Out of the Box** -- Embedded CSS design system renders a polished card with no extra styling required
 - **No Token Handling** -- Assumes the backend uses secure HTTP-only cookies; the view never touches `localStorage` or `sessionStorage`
 
