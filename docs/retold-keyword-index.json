@@ -1,5 +1,5 @@
 {
-	"Generated": "2026-05-26T21:14:20.556Z",
+	"Generated": "2026-06-01T03:48:30.780Z",
 	"Mode": "module",
 	"DocumentCount": 11,
 	"LunrIndex": {
@@ -10132,18 +10132,6 @@
 				}
 			],
 			[
-				"seamlessli",
-				{
-					"_index": 473,
-					"title": {},
-					"module": {},
-					"group": {},
-					"body": {
-						"embedding-guide.md": {}
-					}
-				}
-			],
-			[
 				"section",
 				{
 					"_index": 1,
@@ -10589,6 +10577,18 @@
 						"architecture.md": {},
 						"embedding-guide.md": {},
 						"router-integration.md": {}
+					}
+				}
+			],
+			[
+				"smoothli",
+				{
+					"_index": 473,
+					"title": {},
+					"module": {},
+					"group": {},
+					"body": {
+						"embedding-guide.md": {}
 					}
 				}
 			],
