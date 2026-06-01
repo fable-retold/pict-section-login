@@ -2,7 +2,7 @@
 
 > A drop-in login section for Pict applications
 
-Pict Section Login is a `pict-view` subclass that renders a styled authentication form, talks to a REST backend (the default endpoints match [orator-authentication](https://github.com/fable-retold/orator-authentication), but everything is configurable), stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
+Pict Section Login is a `pict-view` subclass that renders a styled authentication form, talks to a REST backend (the default endpoints match [orator-authentication](https://fable-retold.github.io/orator-authentication/), but everything is configurable), stores the resulting session on the Pict AppData tree, and exposes override hooks so you can chain navigation, route resolution, or any other post-auth behavior.
 
 The view ships with:
 
