@@ -2,7 +2,7 @@
 
 Every developer-facing method, property, and override hook on `PictSectionLogin`. Signatures follow the source in `source/Pict-Section-Login.js`.
 
-`PictSectionLogin` extends [`pict-view`](https://github.com/fable-retold/pict-view), so it inherits all of the standard view lifecycle methods (`render`, `solve`, `initialize`, `onBeforeInitialize`, `onAfterRender`, `onAfterInitialRender`) in addition to the login-specific surface below.
+`PictSectionLogin` extends [`pict-view`](https://fable-retold.github.io/pict-view/), so it inherits all of the standard view lifecycle methods (`render`, `solve`, `initialize`, `onBeforeInitialize`, `onAfterRender`, `onAfterInitialRender`) in addition to the login-specific surface below.
 
 ## Public State
 

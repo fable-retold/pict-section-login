@@ -162,7 +162,7 @@ const tmpOptions =
 };
 ```
 
-Pict template expressions (`{~T:...~}`, `{~D:...~}`, `{~LV:...~}`) work everywhere inside a template; see the [pict-template](https://github.com/fable-retold/pict-template) documentation for the full expression language.
+Pict template expressions (`{~T:...~}`, `{~D:...~}`, `{~LV:...~}`) work everywhere inside a template; see the [pict-template](https://fable-retold.github.io/pict-template/) documentation for the full expression language.
 
 ## Embedded CSS
 
@@ -262,4 +262,4 @@ Every template is parsed by Pict's template engine on render, so you can use any
 | `{~T:Template-Hash~}` | include another template by hash |
 | `{~LV:jsExpression~}` | evaluate a JS expression against the app context |
 
-See [pict-template](https://github.com/fable-retold/pict-template) for the full expression reference.
+See [pict-template](https://fable-retold.github.io/pict-template/) for the full expression reference.
