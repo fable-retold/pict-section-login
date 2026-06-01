@@ -294,7 +294,7 @@ openBook(pBookId)
 - **One login view per application.** The login view owns its own state (`authenticated`, `sessionData`); embedding multiple instances simultaneously is possible but rarely useful.
 - **Use `SessionDataAddress` consistently.** Pick one address (`AppData.Session` is the default) and read it from everywhere. Templates, views, route handlers, and other services should all refer to the same key.
 - **Let `logout()` clean up.** Do not manually null out `authenticated` or `sessionData`. Call `logout()` and let it run its cleanup path, which also writes `null` to the manifest address and invokes `onLogout()`.
-- **Treat `checkSession()` as the source of truth.** On page load, run `checkSession()` before rendering anything that depends on the session. This is what makes "already logged in" work seamlessly after a browser refresh.
+- **Treat `checkSession()` as the source of truth.** On page load, run `checkSession()` before rendering anything that depends on the session. This is what makes "already logged in" work smoothly after a browser refresh.
 - **Do not mix `CheckSessionOnLoad: true` with application-driven checks.** Pick one: either let the view check on load, or set `CheckSessionOnLoad: false` and call `checkSession()` from the application. Doing both causes two simultaneous requests.
 - **Surface `onLoginFailed()` prominently.** The default template shows a small error strip; add analytics or a toast for better visibility if your backend enforces lockout or 2FA.
 - **Keep the backend stateful.** The view does not store tokens. If your backend issues JWTs that the client must remember, you will need to add a minimal service (outside this view) that handles the token lifecycle; for cookie-based sessions no extra work is needed.
