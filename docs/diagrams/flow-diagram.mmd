@@ -1,0 +1,19 @@
+sequenceDiagram
+	participant Browser
+	participant App as PictApplication
+	participant Login as PictSectionLogin
+	participant Router as PictRouter
+	participant API as Auth API
+
+	Browser->>App: load page (URL has hash, e.g. #/Books)
+	App->>App: addProvider('PictRouter', { SkipRouteResolveOnAdd: true })
+	App->>App: addView('Login', ...)
+	App->>Login: render()
+	App->>Login: checkSession()
+	Login->>API: GET /CheckSession
+	API-->>Login: { LoggedIn: true, ... }
+	Login->>Login: AppData.Session = sessionData
+	Login->>Login: onSessionChecked(sessionData)
+	Login->>App: showProtectedApp()
+	App->>Router: resolve()  [now URL hash is honored]
+	Router->>Browser: route to #/Books renders Books view

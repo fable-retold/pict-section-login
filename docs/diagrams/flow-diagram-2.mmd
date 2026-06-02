@@ -1,0 +1,23 @@
+sequenceDiagram
+	participant Browser
+	participant App as PictApplication
+	participant Login as PictSectionLogin
+	participant Router as PictRouter
+	participant API as Auth API
+
+	Browser->>App: load page (URL hash = #/Books)
+	App->>App: store requested hash in AppData.PendingRoute
+	App->>Login: render()
+	App->>Login: checkSession()
+	Login->>API: GET /CheckSession
+	API-->>Login: { LoggedIn: false }
+	Login->>Login: onSessionChecked({ LoggedIn: false })
+	Note over Login,App: login form stays visible
+	Browser->>Login: user submits credentials
+	Login->>API: POST /Authenticate
+	API-->>Login: { LoggedIn: true, ... }
+	Login->>Login: onLoginSuccess(sessionData)
+	Login->>App: showProtectedApp()
+	App->>Router: resolve()
+	Router->>Router: reads AppData.PendingRoute, navigates to #/Books
+	Router->>Browser: Books view renders

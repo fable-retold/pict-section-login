@@ -1,0 +1,29 @@
+sequenceDiagram
+	participant App as PictApplication
+	participant View as PictSectionLogin
+	participant CSS as CSSMap
+	participant TP as TemplateProvider
+	participant DOM
+	participant API as Auth API
+
+	App->>View: render()
+	View->>View: onBeforeInitialize()
+	View->>TP: register templates from default_configuration
+	View->>View: onAfterRender()
+	View->>CSS: injectCSS() (first call)
+	View->>TP: parseTemplateByHash('Pict-Login-Template-Form')
+	View->>DOM: assignContent('#pict-login-form-area', form)
+	View->>View: onAfterInitialRender()
+	alt CheckSessionOnLoad = true
+		View->>API: GET CheckSessionEndpoint
+		API-->>View: { LoggedIn, ... }
+		alt LoggedIn = true
+			View->>View: render status bar instead of form
+		end
+		View->>View: onSessionChecked(sessionData)
+	end
+	alt ShowOAuthProviders = true
+		View->>API: GET OAuthProvidersEndpoint
+		API-->>View: { Providers: [...] }
+		View->>DOM: render OAuth button row
+	end

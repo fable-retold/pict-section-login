@@ -4,45 +4,8 @@ Pict Section Login is a single `pict-view` subclass that owns its own templates,
 
 ## Component Map
 
-```mermaid
-graph TB
-	subgraph "Host Pict Application"
-		APP["PictApplication"]
-		APPDATA["AppData tree<br/>(manifest-addressable)"]
-		ROUTER["Pict Router<br/>(optional)"]
-	end
-
-	subgraph "pict-section-login"
-		LOGIN["PictSectionLogin<br/>(extends pict-view)"]
-		CONFIG["default_configuration"]
-		TEMPLATES["Templates<br/>Wrapper / Form / Status / OAuth / Error"]
-		CSS["CSS design system"]
-	end
-
-	subgraph "Pict Services"
-		TP["TemplateProvider"]
-		CM["CSSMap"]
-		CA["ContentAssignment"]
-		MAN["fable.manifest"]
-	end
-
-	subgraph "Backend"
-		AUTH["Auth REST API<br/>(orator-authentication<br/>or custom)"]
-	end
-
-	APP -->|addView| LOGIN
-	LOGIN -->|merges| CONFIG
-	LOGIN -->|registers| TEMPLATES
-	LOGIN -->|registers| CSS
-	LOGIN -->|parse| TP
-	LOGIN -->|inject| CM
-	LOGIN -->|DOM reads/writes| CA
-	LOGIN -->|setValueByHash| MAN
-	MAN -->|reads/writes| APPDATA
-	LOGIN -->|fetch| AUTH
-	LOGIN -.->|hooks| APP
-	APP -.->|post-auth| ROUTER
-```
+<!-- bespoke diagram: edit diagrams/component-map.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![Component Map](diagrams/component-map.svg)
 
 ## Class Hierarchy
 
@@ -115,68 +78,13 @@ stateDiagram-v2
 
 ## Login Request Flow
 
-```mermaid
-sequenceDiagram
-	participant User
-	participant Form as Login Form
-	participant View as PictSectionLogin
-	participant API as Auth API
-	participant Manifest as fable.manifest
-	participant App as PictApplication
-
-	User->>Form: enter credentials + submit
-	Form->>View: form submit handler
-	View->>API: POST LoginEndpoint { UserName, Password }
-	alt LoginMethod = GET
-		View->>API: GET LoginEndpoint/:username/:password
-	end
-	API-->>View: { LoggedIn, UserID, UserRecord }
-	alt LoggedIn = true
-		View->>View: authenticated = true
-		View->>View: sessionData = response
-		View->>Manifest: setValueByHash(SessionDataAddress, sessionData)
-		View->>View: render status bar, hide form
-		View->>View: onLoginSuccess(sessionData)  [override hook]
-		View->>App: PictApplication.solve()  [if present]
-	else LoggedIn = false / error
-		View->>View: render error message
-		View->>View: onLoginFailed(error)  [override hook]
-	end
-```
+<!-- bespoke diagram: edit diagrams/login-request-flow.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![Login Request Flow](diagrams/login-request-flow.svg)
 
 ## Initial Render Flow
 
-```mermaid
-sequenceDiagram
-	participant App as PictApplication
-	participant View as PictSectionLogin
-	participant CSS as CSSMap
-	participant TP as TemplateProvider
-	participant DOM
-	participant API as Auth API
-
-	App->>View: render()
-	View->>View: onBeforeInitialize()
-	View->>TP: register templates from default_configuration
-	View->>View: onAfterRender()
-	View->>CSS: injectCSS() (first call)
-	View->>TP: parseTemplateByHash('Pict-Login-Template-Form')
-	View->>DOM: assignContent('#pict-login-form-area', form)
-	View->>View: onAfterInitialRender()
-	alt CheckSessionOnLoad = true
-		View->>API: GET CheckSessionEndpoint
-		API-->>View: { LoggedIn, ... }
-		alt LoggedIn = true
-			View->>View: render status bar instead of form
-		end
-		View->>View: onSessionChecked(sessionData)
-	end
-	alt ShowOAuthProviders = true
-		View->>API: GET OAuthProvidersEndpoint
-		API-->>View: { Providers: [...] }
-		View->>DOM: render OAuth button row
-	end
-```
+<!-- bespoke diagram: edit diagrams/initial-render-flow.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![Initial Render Flow](diagrams/initial-render-flow.svg)
 
 ## State Members
 

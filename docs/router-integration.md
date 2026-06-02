@@ -20,55 +20,13 @@ The pattern is derived from the `example_applications/harness_app` example in th
 
 ## Flow Diagram
 
-```mermaid
-sequenceDiagram
-	participant Browser
-	participant App as PictApplication
-	participant Login as PictSectionLogin
-	participant Router as PictRouter
-	participant API as Auth API
-
-	Browser->>App: load page (URL has hash, e.g. #/Books)
-	App->>App: addProvider('PictRouter', { SkipRouteResolveOnAdd: true })
-	App->>App: addView('Login', ...)
-	App->>Login: render()
-	App->>Login: checkSession()
-	Login->>API: GET /CheckSession
-	API-->>Login: { LoggedIn: true, ... }
-	Login->>Login: AppData.Session = sessionData
-	Login->>Login: onSessionChecked(sessionData)
-	Login->>App: showProtectedApp()
-	App->>Router: resolve()  [now URL hash is honored]
-	Router->>Browser: route to #/Books renders Books view
-```
+<!-- bespoke diagram: edit diagrams/flow-diagram.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![Flow Diagram](diagrams/flow-diagram.svg)
 
 Or, in the unauthenticated branch:
 
-```mermaid
-sequenceDiagram
-	participant Browser
-	participant App as PictApplication
-	participant Login as PictSectionLogin
-	participant Router as PictRouter
-	participant API as Auth API
-
-	Browser->>App: load page (URL hash = #/Books)
-	App->>App: store requested hash in AppData.PendingRoute
-	App->>Login: render()
-	App->>Login: checkSession()
-	Login->>API: GET /CheckSession
-	API-->>Login: { LoggedIn: false }
-	Login->>Login: onSessionChecked({ LoggedIn: false })
-	Note over Login,App: login form stays visible
-	Browser->>Login: user submits credentials
-	Login->>API: POST /Authenticate
-	API-->>Login: { LoggedIn: true, ... }
-	Login->>Login: onLoginSuccess(sessionData)
-	Login->>App: showProtectedApp()
-	App->>Router: resolve()
-	Router->>Router: reads AppData.PendingRoute, navigates to #/Books
-	Router->>Browser: Books view renders
-```
+<!-- bespoke diagram: edit diagrams/flow-diagram-2.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![Flow Diagram](diagrams/flow-diagram-2.svg)
 
 ## Step-by-Step Setup
 

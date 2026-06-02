@@ -1,0 +1,26 @@
+sequenceDiagram
+	participant User
+	participant Form as Login Form
+	participant View as PictSectionLogin
+	participant API as Auth API
+	participant Manifest as fable.manifest
+	participant App as PictApplication
+
+	User->>Form: enter credentials + submit
+	Form->>View: form submit handler
+	View->>API: POST LoginEndpoint { UserName, Password }
+	alt LoginMethod = GET
+		View->>API: GET LoginEndpoint/:username/:password
+	end
+	API-->>View: { LoggedIn, UserID, UserRecord }
+	alt LoggedIn = true
+		View->>View: authenticated = true
+		View->>View: sessionData = response
+		View->>Manifest: setValueByHash(SessionDataAddress, sessionData)
+		View->>View: render status bar, hide form
+		View->>View: onLoginSuccess(sessionData)  [override hook]
+		View->>App: PictApplication.solve()  [if present]
+	else LoggedIn = false / error
+		View->>View: render error message
+		View->>View: onLoginFailed(error)  [override hook]
+	end

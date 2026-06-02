@@ -1,0 +1,37 @@
+graph TB
+	subgraph "Host Pict Application"
+		APP["PictApplication"]
+		APPDATA["AppData tree<br/>(manifest-addressable)"]
+		ROUTER["Pict Router<br/>(optional)"]
+	end
+
+	subgraph "pict-section-login"
+		LOGIN["PictSectionLogin<br/>(extends pict-view)"]
+		CONFIG["default_configuration"]
+		TEMPLATES["Templates<br/>Wrapper / Form / Status / OAuth / Error"]
+		CSS["CSS design system"]
+	end
+
+	subgraph "Pict Services"
+		TP["TemplateProvider"]
+		CM["CSSMap"]
+		CA["ContentAssignment"]
+		MAN["fable.manifest"]
+	end
+
+	subgraph "Backend"
+		AUTH["Auth REST API<br/>(orator-authentication<br/>or custom)"]
+	end
+
+	APP -->|addView| LOGIN
+	LOGIN -->|merges| CONFIG
+	LOGIN -->|registers| TEMPLATES
+	LOGIN -->|registers| CSS
+	LOGIN -->|parse| TP
+	LOGIN -->|inject| CM
+	LOGIN -->|DOM reads/writes| CA
+	LOGIN -->|setValueByHash| MAN
+	MAN -->|reads/writes| APPDATA
+	LOGIN -->|fetch| AUTH
+	LOGIN -.->|hooks| APP
+	APP -.->|post-auth| ROUTER
