@@ -111,32 +111,8 @@ Any other fields are preserved verbatim in `this.sessionData` and at `SessionDat
 
 ## File Layout
 
-```
-pict-section-login/
-├── README.md
-├── package.json
-├── source/
-│   ├── Pict-Section-Login.js                     # main class
-│   └── Pict-Section-Login-DefaultConfiguration.js # templates + CSS + defaults
-├── test/
-│   ├── Pict-Section-Login_tests.js               # Mocha TDD unit tests
-│   └── Browser_Integration_tests.js              # Puppeteer headless tests
-├── example_applications/
-│   ├── orator_login/                             # minimal orator-authentication
-│   ├── custom_login/                             # custom endpoints + hooks
-│   ├── oauth_login/                              # OAuth providers
-│   └── harness_app/                              # full login + router app
-└── docs/
-	├── README.md, _cover.md, _sidebar.md, _topbar.md
-	├── quickstart.md
-	├── architecture.md
-	├── configuration.md
-	├── api-reference.md
-	├── code-snippets.md
-	├── embedding-guide.md
-	├── router-integration.md
-	└── templates-and-styling.md
-```
+<!-- bespoke diagram: edit diagrams/file-layout.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-section-login/docs -->
+![File Layout](diagrams/file-layout.svg)
 
 ## Session Storage Policy
 
