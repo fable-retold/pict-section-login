@@ -139,4 +139,4 @@ MIT
 
 ## Contributing
 
-Pull requests welcome. See the [Retold Contributing Guide](https://github.com/stevenvelozo/retold/blob/main/docs/contributing.md) for the code of conduct, contribution process, and testing requirements.
+Pull requests welcome. See the [Retold Contributing Guide](https://github.com/fable-retold/retold/blob/main/docs/contributing.md) for the code of conduct, contribution process, and testing requirements.
