@@ -146,18 +146,21 @@ suite
 				);
 				test
 				(
-					'Should include 5 templates',
+					'Should include the base + magic-link templates',
 					(fDone) =>
 					{
 						let tmpTemplates = libPictSectionLogin.default_configuration.Templates;
 						Expect(tmpTemplates).to.be.an('array');
-						Expect(tmpTemplates.length).to.equal(5);
+						Expect(tmpTemplates.length).to.equal(8);
 						let tmpHashes = tmpTemplates.map((pT) => pT.Hash);
 						Expect(tmpHashes).to.include('Pict-Login-Template-Wrapper');
 						Expect(tmpHashes).to.include('Pict-Login-Template-Form');
 						Expect(tmpHashes).to.include('Pict-Login-Template-Status');
 						Expect(tmpHashes).to.include('Pict-Login-Template-OAuthProviders');
 						Expect(tmpHashes).to.include('Pict-Login-Template-Error');
+						Expect(tmpHashes).to.include('Pict-Login-Template-MagicToggle');
+						Expect(tmpHashes).to.include('Pict-Login-Template-MagicForm');
+						Expect(tmpHashes).to.include('Pict-Login-Template-MagicSent');
 						return fDone();
 					}
 				);
@@ -170,6 +173,18 @@ suite
 						Expect(libPictSectionLogin.default_configuration.CSS).to.contain('.pict-login-card');
 						Expect(libPictSectionLogin.default_configuration.CSS).to.contain('.pict-login-form');
 						Expect(libPictSectionLogin.default_configuration.CSS).to.contain('.pict-login-oauth');
+						return fDone();
+					}
+				);
+				test
+				(
+					'Should default the magic-link endpoints and keep it off by default',
+					(fDone) =>
+					{
+						let tmpConfig = libPictSectionLogin.default_configuration;
+						Expect(tmpConfig.MagicLinkRequestEndpoint).to.equal('/1.0/Login/MagicLink/Request');
+						Expect(tmpConfig.MagicLinkVerifyEndpoint).to.equal('/1.0/Login/MagicLink/Verify');
+						Expect(tmpConfig.ShowMagicLink).to.equal(false);
 						return fDone();
 					}
 				);
@@ -192,6 +207,22 @@ suite
 						Expect(tmpView.authenticated).to.equal(false);
 						Expect(tmpView.sessionData).to.equal(null);
 						Expect(tmpView.oauthProviders).to.be.an('array').that.is.empty;
+						return fDone();
+					}
+				);
+				test
+				(
+					'Should expose the magic-link API when enabled',
+					(fDone) =>
+					{
+						let tmpPict = configureTestPict();
+						let tmpView = tmpPict.addView('Pict-View-TestLogin-Magic', { ShowMagicLink: true }, libPictSectionLogin);
+						Expect(tmpView.magicLinkMode).to.equal(false);
+						Expect(tmpView.requestMagicLink).to.be.a('function');
+						Expect(tmpView.verifyMagicLink).to.be.a('function');
+						Expect(tmpView.showMagicLinkForm).to.be.a('function');
+						Expect(tmpView.showPasswordForm).to.be.a('function');
+						Expect(tmpView.options.ShowMagicLink).to.equal(true);
 						return fDone();
 					}
 				);

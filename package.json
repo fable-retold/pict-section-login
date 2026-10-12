@@ -1,54 +1,54 @@
 {
-    "name": "pict-section-login",
-    "version": "1.0.0",
-    "description": "Pict login section for authentication UIs — works with orator-authentication or any custom backend",
-    "main": "source/Pict-Section-Login.js",
-    "scripts": {
-        "start": "node source/Pict-Section-Login.js",
-        "build": "npx quack build",
-        "test": "npx quack test",
-        "tests": "npx quack test -g",
-        "coverage": "npx quack coverage",
-        "test-browser": "npx mocha test/Browser_Integration_tests.js --timeout 60000",
-        "example": "npx quack examples"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/fable-retold/pict-section-login.git"
-    },
-    "author": "steven velozo <steven@velozo.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/fable-retold/pict-section-login/issues"
-    },
-    "homepage": "https://github.com/fable-retold/pict-section-login#readme",
-    "devDependencies": {
-        "browser-env": "^3.3.0",
-        "pict": "^1.0.372",
-        "pict-application": "^1.0.34",
-        "pict-docuserve": "^1.4.4",
-        "puppeteer": "^24.38.0",
-        "quackage": "^1.3.0"
-    },
-    "mocha": {
-        "diff": true,
-        "extension": [
-            "js"
-        ],
-        "package": "./package.json",
-        "reporter": "spec",
-        "slow": "75",
-        "timeout": "5000",
-        "ui": "tdd",
-        "watch-files": [
-            "source/**/*.js",
-            "test/**/*.js"
-        ],
-        "watch-ignore": [
-            "lib/vendor"
-        ]
-    },
-    "dependencies": {
-        "pict-view": "^1.0.68"
-    }
+  "name": "pict-section-login",
+  "version": "1.1.0",
+  "description": "Pict login section for authentication UIs — works with orator-authentication or any custom backend",
+  "main": "source/Pict-Section-Login.js",
+  "scripts": {
+    "start": "node source/Pict-Section-Login.js",
+    "build": "npx quack build",
+    "test": "npx quack test",
+    "tests": "npx quack test -g",
+    "coverage": "npx quack coverage",
+    "test-browser": "npx mocha test/Browser_Integration_tests.js --timeout 60000",
+    "example": "npx quack examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fable-retold/pict-section-login.git"
+  },
+  "author": "steven velozo <steven@velozo.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fable-retold/pict-section-login/issues"
+  },
+  "homepage": "https://github.com/fable-retold/pict-section-login#readme",
+  "devDependencies": {
+    "browser-env": "^3.3.0",
+    "pict": "^1.0.372",
+    "pict-application": "^1.0.34",
+    "pict-docuserve": "^1.4.4",
+    "puppeteer": "^24.38.0",
+    "quackage": "^1.3.0"
+  },
+  "mocha": {
+    "diff": true,
+    "extension": [
+      "js"
+    ],
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": "75",
+    "timeout": "5000",
+    "ui": "tdd",
+    "watch-files": [
+      "source/**/*.js",
+      "test/**/*.js"
+    ],
+    "watch-ignore": [
+      "lib/vendor"
+    ]
+  },
+  "dependencies": {
+    "pict-view": "^1.0.68"
+  }
 }

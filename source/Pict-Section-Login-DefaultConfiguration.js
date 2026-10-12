@@ -19,9 +19,16 @@ module.exports = (
 	"OAuthProvidersEndpoint": "/1.0/OAuth/Providers",
 	"OAuthBeginEndpoint": "/1.0/OAuth/Begin",
 
+	// Passwordless "magic link" sign-in. Request emails a one-time link; Verify consumes its token.
+	// Defaults match the plansheet / orator-authentication magic-link routes; override for any backend.
+	"MagicLinkRequestEndpoint": "/1.0/Login/MagicLink/Request",
+	"MagicLinkVerifyEndpoint": "/1.0/Login/MagicLink/Verify",
+
 	// ----- Behavior -----
 	"CheckSessionOnLoad": true,
 	"ShowOAuthProviders": false,
+	// When true, the card offers a "sign in with a link instead" toggle beneath the password form.
+	"ShowMagicLink": false,
 
 	// ----- Data Address -----
 	// Where session state is stored in the Pict address space.
@@ -37,6 +44,18 @@ module.exports = (
 		{
 			"Hash": "Pict-Login-Template-Form",
 			"Template": "<form id=\"pict-login-form\" class=\"pict-login-form\"><label class=\"pict-login-label\" for=\"pict-login-username\">Username</label><input class=\"pict-login-input\" type=\"text\" id=\"pict-login-username\" name=\"username\" autocomplete=\"username\" placeholder=\"Enter username\" /><label class=\"pict-login-label\" for=\"pict-login-password\">Password</label><input class=\"pict-login-input\" type=\"password\" id=\"pict-login-password\" name=\"password\" autocomplete=\"current-password\" placeholder=\"Enter password\" /><button class=\"pict-login-submit\" type=\"submit\">Log In</button></form>"
+		},
+		{
+			"Hash": "Pict-Login-Template-MagicToggle",
+			"Template": "<div class=\"pict-login-alt\"><button type=\"button\" class=\"pict-login-altlink\" id=\"pict-login-show-magic\">Email me a sign-in link instead</button></div>"
+		},
+		{
+			"Hash": "Pict-Login-Template-MagicForm",
+			"Template": "<form id=\"pict-login-magic-form\" class=\"pict-login-form\"><label class=\"pict-login-label\" for=\"pict-login-magic-email\">Email</label><input class=\"pict-login-input\" type=\"email\" id=\"pict-login-magic-email\" name=\"email\" autocomplete=\"email\" placeholder=\"you@example.com\" /><button class=\"pict-login-submit\" type=\"submit\">Email me a sign-in link</button><div class=\"pict-login-alt\"><button type=\"button\" class=\"pict-login-altlink\" id=\"pict-login-show-password\">Use a password instead</button></div></form>"
+		},
+		{
+			"Hash": "Pict-Login-Template-MagicSent",
+			"Template": "<div class=\"pict-login-sent\"><div class=\"pict-login-sent-title\">Check your email</div><div class=\"pict-login-sent-body\">If an account matches that address, a one-time sign-in link is on its way. It expires shortly and can be used once.</div><div class=\"pict-login-alt\"><button type=\"button\" class=\"pict-login-altlink\" id=\"pict-login-magic-again\">Use a different email</button></div></div>"
 		},
 		{
 			"Hash": "Pict-Login-Template-Status",
@@ -260,6 +279,46 @@ module.exports = (
 .pict-login-oauth-btn--microsoft:hover
 {
 	background: #E6F6FE;
+}
+
+/* ----- Magic link (passwordless) ----- */
+.pict-login-alt
+{
+	margin-top: 0.75rem;
+	text-align: center;
+}
+.pict-login-altlink
+{
+	background: none;
+	border: none;
+	padding: 0.25rem;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: var(--theme-color-brand-primary, #E76F51);
+	cursor: pointer;
+	text-decoration: underline;
+}
+.pict-login-altlink:hover
+{
+	color: var(--theme-color-brand-primary-hover, #C45A3E);
+}
+.pict-login-sent
+{
+	text-align: center;
+	padding: 0.5rem 0;
+}
+.pict-login-sent-title
+{
+	font-weight: 700;
+	font-size: 1rem;
+	margin-bottom: 0.4rem;
+	color: var(--theme-color-text-primary, #264653);
+}
+.pict-login-sent-body
+{
+	font-size: 0.85rem;
+	color: var(--theme-color-text-muted, #666);
+	line-height: 1.4;
 }
 `
 });

@@ -12,6 +12,7 @@ class PictSectionLogin extends libPictViewClass
 		this.authenticated = false;
 		this.sessionData = null;
 		this.oauthProviders = [];
+		this.magicLinkMode = false;
 
 		this.initialRenderComplete = false;
 	}
@@ -233,6 +234,108 @@ class PictSectionLogin extends libPictViewClass
 			});
 	}
 
+	// ===== Magic Link (passwordless) =====
+
+	/**
+	 * Request a one-time sign-in link by email. The backend is anti-enumeration (it always reports
+	 * success), so the UI always shows the neutral "check your email" state and never reveals whether
+	 * an account exists.
+	 *
+	 * @param {string} pEmail - The email address to send the link to
+	 * @param {function} [fCallback] - Optional callback(pError, pData)
+	 */
+	requestMagicLink(pEmail, fCallback)
+	{
+		if (typeof (fCallback) !== 'function') { fCallback = () => {}; }
+		this._clearError();
+
+		fetch(this.options.MagicLinkRequestEndpoint,
+			{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ Email: pEmail }) })
+			.then((pResponse) => pResponse.json())
+			.then((pData) =>
+			{
+				this._showMagicSent();
+				this.onMagicLinkSent(pData || {});
+				return fCallback(null, pData);
+			})
+			.catch((pError) =>
+			{
+				this.log.error('PictSectionLogin requestMagicLink error: ' + pError.message);
+				this._displayError('Could not request a sign-in link.');
+				return fCallback(pError.message);
+			});
+	}
+
+	/**
+	 * Verify a magic-link token (from the clicked link's route) and sign in. On a 2FA account the
+	 * server returns a challenge envelope instead of a session; that is handed to onMagicLinkChallenge
+	 * so the host can run its second-factor step.
+	 *
+	 * @param {string} pToken - The one-time token carried by the link
+	 * @param {function} [fCallback] - Optional callback(pError, pData)
+	 */
+	verifyMagicLink(pToken, fCallback)
+	{
+		if (typeof (fCallback) !== 'function') { fCallback = () => {}; }
+		this._clearError();
+
+		fetch(this.options.MagicLinkVerifyEndpoint,
+			{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ Token: pToken }) })
+			.then((pResponse) => pResponse.json())
+			.then((pData) =>
+			{
+				if (pData && pData.LoggedIn)
+				{
+					this.authenticated = true;
+					this.sessionData = pData;
+					this._storeSessionData(pData);
+					this._updateView();
+					this.onLoginSuccess(pData);
+					this._solveApp();
+					return fCallback(null, pData);
+				}
+				if (pData && pData.Challenge)
+				{
+					this.onMagicLinkChallenge(pData);
+					return fCallback(null, pData);
+				}
+				let tmpError = (pData && pData.Error) ? pData.Error : 'This sign-in link is no longer valid.';
+				this._displayError(tmpError);
+				this.onLoginFailed(tmpError);
+				return fCallback(tmpError);
+			})
+			.catch((pError) =>
+			{
+				this.log.error('PictSectionLogin verifyMagicLink error: ' + pError.message);
+				let tmpMessage = 'Could not verify the sign-in link.';
+				this._displayError(tmpMessage);
+				this.onLoginFailed(tmpMessage);
+				return fCallback(tmpMessage);
+			});
+	}
+
+	/**
+	 * Switch the card to the magic-link (email) form.
+	 */
+	showMagicLinkForm()
+	{
+		this.magicLinkMode = true;
+		this._clearError();
+		let tmpAreaElements = this.services.ContentAssignment.getElement('#pict-login-form-area');
+		if (tmpAreaElements && tmpAreaElements.length > 0) { this._renderFormArea(tmpAreaElements[0]); }
+	}
+
+	/**
+	 * Switch the card back to the password form.
+	 */
+	showPasswordForm()
+	{
+		this.magicLinkMode = false;
+		this._clearError();
+		let tmpAreaElements = this.services.ContentAssignment.getElement('#pict-login-form-area');
+		if (tmpAreaElements && tmpAreaElements.length > 0) { this._renderFormArea(tmpAreaElements[0]); }
+	}
+
 	// ===== Overridable Hooks =====
 	// Developers override these for custom post-login/logout behavior.
 
@@ -271,6 +374,25 @@ class PictSectionLogin extends libPictViewClass
 		// Override in subclass or instance
 	}
 
+	/**
+	 * Called after a magic-link request was sent (the neutral "check your email" state is already shown).
+	 * @param {object} pData - The server response
+	 */
+	onMagicLinkSent(pData)
+	{
+		// Override in subclass or instance
+	}
+
+	/**
+	 * Called when verifying a magic link returns a second-factor challenge instead of a session.
+	 * The host runs its 2FA step with the challenge envelope (ChallengeToken, Channel, ...).
+	 * @param {object} pChallenge - The challenge envelope from the server
+	 */
+	onMagicLinkChallenge(pChallenge)
+	{
+		// Override in subclass or instance
+	}
+
 	// ===== Internal Helpers =====
 
 	/**
@@ -301,12 +423,94 @@ class PictSectionLogin extends libPictViewClass
 			});
 		}
 
+		let tmpShowMagicElements = this.services.ContentAssignment.getElement('#pict-login-show-magic');
+		if (tmpShowMagicElements && tmpShowMagicElements.length > 0)
+		{
+			tmpShowMagicElements[0].addEventListener('click', () =>
+			{
+				this.showMagicLinkForm();
+			});
+		}
+
 		let tmpLogoutElements = this.services.ContentAssignment.getElement('#pict-login-logout');
 		if (tmpLogoutElements && tmpLogoutElements.length > 0)
 		{
 			tmpLogoutElements[0].addEventListener('click', () =>
 			{
 				this.logout();
+			});
+		}
+	}
+
+	/**
+	 * Render the password form (plus the magic-link toggle when ShowMagicLink is set) or the magic-link
+	 * form into the form area, then wire its events. Mode is driven by this.magicLinkMode.
+	 */
+	_renderFormArea(pFormArea)
+	{
+		if (this.magicLinkMode)
+		{
+			pFormArea.innerHTML = this.pict.parseTemplateByHash('Pict-Login-Template-MagicForm', {});
+			this._wireMagicEvents();
+			return;
+		}
+		let tmpHTML = this.pict.parseTemplateByHash('Pict-Login-Template-Form', {});
+		if (this.options.ShowMagicLink)
+		{
+			tmpHTML += this.pict.parseTemplateByHash('Pict-Login-Template-MagicToggle', {});
+		}
+		pFormArea.innerHTML = tmpHTML;
+		this._wireFormEvents();
+	}
+
+	/**
+	 * Wire the magic-link form submit and its "use a password instead" toggle.
+	 */
+	_wireMagicEvents()
+	{
+		let tmpFormElements = this.services.ContentAssignment.getElement('#pict-login-magic-form');
+		if (tmpFormElements && tmpFormElements.length > 0)
+		{
+			let tmpForm = tmpFormElements[0];
+			tmpForm.addEventListener('submit', (pEvent) =>
+			{
+				pEvent.preventDefault();
+				let tmpEmailInput = tmpForm.querySelector('#pict-login-magic-email');
+				let tmpEmail = tmpEmailInput ? String(tmpEmailInput.value || '').trim() : '';
+				if (!tmpEmail || tmpEmail.indexOf('@') < 1)
+				{
+					this._displayError('Please enter a valid email.');
+					return;
+				}
+				this.requestMagicLink(tmpEmail);
+			});
+
+			let tmpBack = tmpForm.querySelector('#pict-login-show-password');
+			if (tmpBack)
+			{
+				tmpBack.addEventListener('click', () =>
+				{
+					this.showPasswordForm();
+				});
+			}
+		}
+	}
+
+	/**
+	 * Replace the form area with the neutral "check your email" state.
+	 */
+	_showMagicSent()
+	{
+		let tmpAreaElements = this.services.ContentAssignment.getElement('#pict-login-form-area');
+		if (!tmpAreaElements || tmpAreaElements.length < 1) { return; }
+		let tmpArea = tmpAreaElements[0];
+		tmpArea.innerHTML = this.pict.parseTemplateByHash('Pict-Login-Template-MagicSent', {});
+		let tmpAgain = tmpArea.querySelector('#pict-login-magic-again');
+		if (tmpAgain)
+		{
+			tmpAgain.addEventListener('click', () =>
+			{
+				this.showMagicLinkForm();
 			});
 		}
 	}
@@ -431,12 +635,12 @@ class PictSectionLogin extends libPictViewClass
 				let tmpFormArea = tmpFormAreaElements[0];
 				tmpFormArea.style.display = 'block';
 
-				// Re-render form if empty
-				if (!tmpFormArea.querySelector('#pict-login-form'))
+				// Re-render the form (password or magic-link) if nothing is rendered yet.
+				if (!tmpFormArea.querySelector('#pict-login-form')
+					&& !tmpFormArea.querySelector('#pict-login-magic-form')
+					&& !tmpFormArea.querySelector('.pict-login-sent'))
 				{
-					let tmpFormHTML = this.pict.parseTemplateByHash('Pict-Login-Template-Form', {});
-					tmpFormArea.innerHTML = tmpFormHTML;
-					this._wireFormEvents();
+					this._renderFormArea(tmpFormArea);
 				}
 			}
 			if (tmpOAuthAreaElements && tmpOAuthAreaElements.length > 0)
